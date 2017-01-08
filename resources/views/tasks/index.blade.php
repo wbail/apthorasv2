@@ -422,33 +422,25 @@ $('.btn-link').on('click', function(e) {
         $('#myModalLabelDashboard').html('Task ' + task.descricao);
     
         $.get('apontamentos/show/' + taskid, function(apontamento) {
-            console.log(apontamento);
-        // $('.dashboard-body').html('{!! Form::label("created_at", "Criado em ") !!}' +  $.format.date(task.created_at, " dd/MM/yyyy") + '<br>' + '{!! Form::label("user", "Criado por") !!} ' + task.user_id + '<br>' + '{!! Form::label("status", "Conclusão ") !!} ' + task.status + '%' + '<br>');
+            
             if(apontamento == undefined) {
                 apontamento = '';
             }
 
-            var result;
-            var table = '<table class="table table-striped table-hover table-bordered"><thead><th>Usuário</th><th>Comentário</th></thead><tbody>';
-            var endtable ='</tbody></table>';
-
+            var html = '<table class="table table-striped table-hover table-bordered"><thead><th>Usuário</th><th>Comentário</th></thead><tbody><tr>';
+           
             for(var i = 0; i < apontamento.length; i++) {
                 if (apontamento[i].comentario == null) {
-                    apontamento[i].comentario = 'vazio';
+                    apontamento[i].comentario = '';
                 };
-                result = result + '<td>' + apontamento[i].name + '<br>' + $.format.date(apontamento[i].created_at, "dd/MM/yyyy HH:mm:ss") + '</td><td>' + apontamento[i].comentario + '</td>';
+                html = html + '<tr><td>' + apontamento[i].name + '<br>' + $.format.date(apontamento[i].created_at, "dd/MM/yyyy HH:mm:ss") + '</td><td>' + apontamento[i].comentario + '</td></tr>';
             }
-            result = result + endtable;
-            $('.dashboard-body').html(table + result);
 
-
-
+            $('.dashboard-body').html(html + '</tbody></table>');
+        
         });
         
     });
-
-
-    
         
 });
 
