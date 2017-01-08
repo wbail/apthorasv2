@@ -15,8 +15,9 @@ class CreateApontamentosTable extends Migration
     {
         Schema::create('apontamentos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('hora_inicio', 25);
-            $table->string('hora_fim', 25);
+            $table->dateTime('hora_inicio');
+            $table->dateTime('hora_fim');
+            $table->text('comentario');
             $table->integer('task_id')->unsigned();
             $table->foreign('task_id')->references('id')->on('tasks');
             $table->integer('user_id')->unsigned();

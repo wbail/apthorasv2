@@ -50,7 +50,6 @@
         </div>
     </div>
 
-
 <script type="text/javascript">
 
 // Deletar Client

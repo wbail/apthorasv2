@@ -66,10 +66,8 @@ class TaskController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-
-        $tasks = Task::find($id);
         
-        return Response::json($tasks);
+        return Response::json(Task::find($id));
     }
 
     /**

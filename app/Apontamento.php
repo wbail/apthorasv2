@@ -9,6 +9,7 @@ class Apontamento extends Model {
     public $fillable = [
 		'hora_inicio',
 		'hora_fim',
+		'comentario',
 		'user_id',
 		'task_id'
 	];

@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.0/css/bootstrap-slider.min.css" />
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
 
 
 <style type="text/css">
@@ -114,9 +115,15 @@
                                 </td>
                                 <td class="text-center">
                                     <p><span id="my_timer_{{ $tasks->id }}" value=""> Hora Início: 00:00:00</span></p>
-                                    <button id="control_{{ $tasks->id }}" class="btn btn-primary btn-sm" value="{{ $tasks->id }}" onclick="changeState({{ $tasks->id }});">Start</button>
-                                    <button id="control_{{ $tasks->id }}" class="btn btn-danger btn-sm" value="{{ $tasks->id }}" data-toggle="modal" data-target="#myModalPauseTask" onclick="stop_timer({{ $tasks->id }});">Stop</button>
-                                    <button id="reset_{{ $tasks->id }}" class="btn btn-default btn-sm" value="{{ $tasks->id }}" onclick="reset({{ $tasks->id }});">Reset</button>
+                                    @if($tasks->status == 100)
+                                    <button id="control_{{ $tasks->id }}" class="btn btn-primary btn-sm" value="{{ $tasks->id }}" onclick="changeState({{ $tasks->id }});" title="Iniciar Timer" disabled="disabled"><i class="fa fa-clock-o"></i></button>
+                                    <button id="control_{{ $tasks->id }}" class="btn btn-danger btn-sm" value="{{ $tasks->id }}" data-toggle="modal" data-target="#myModalPauseTask" onclick="stop_timer({{ $tasks->id }});" title="Parar Timer" disabled="disabled"><i class="fa fa-stop"></i></button>
+                                    <button id="reset_{{ $tasks->id }}" class="btn btn-default btn-sm" value="{{ $tasks->id }}" onclick="reset({{ $tasks->id }});" title="Resetar Timer" disabled="disabled"><i class="fa fa-refresh"></i></button>
+                                    @else
+                                    <button id="control_{{ $tasks->id }}" class="btn btn-primary btn-sm" value="{{ $tasks->id }}" onclick="changeState({{ $tasks->id }});" title="Iniciar Timer"><i class="fa fa-clock-o"></i></button>
+                                    <button id="control_{{ $tasks->id }}" class="btn btn-danger btn-sm" value="{{ $tasks->id }}" data-toggle="modal" data-target="#myModalPauseTask" onclick="stop_timer({{ $tasks->id }});" title="Parar Timer"><i class="fa fa-stop"></i></button>
+                                    <button id="reset_{{ $tasks->id }}" class="btn btn-default btn-sm" value="{{ $tasks->id }}" onclick="reset({{ $tasks->id }});" title="Resetar Timer"><i class="fa fa-refresh"></i></button>
+                                    @endif
                                 </td>
                             </tbody>
                             @endforeach
@@ -184,6 +191,7 @@
                     <h4 class="modal-title" id="myModalLabelDashboard"></h4>
                 </div>
                 <div class="modal-body dashboard-body">
+                    <br>
                     
                 </div>
                 <div class="modal-footer dashboard-task">
@@ -196,7 +204,7 @@
 
     <!-- Modal pause timer task-->
     <div class="modal fade" id="myModalPauseTask" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -208,14 +216,19 @@
                         <div class="col-md-6">
                             {!! Form::label('status', 'Progresso *') !!}
                             <br>
-                            
                             {!! Form::text('status', null, ['class'=>'form-inline', 'id'=>'ex1', 'data-slider-id'=>'ex1Slider', 'type'=>'text', 'data-slider-min'=>'0', 'data-slider-max'=>'100', 'data-slider-step'=>'1', 'data-slider-value'=>'0']) !!}
-                            
                         </div> {{-- ./col-md-6 --}}
-                        <div class="col-md-5">
-                            
-                            
-                        </div> {{-- ./col-md-5 --}}
+                        <div class="col-md-5"></div> {{-- ./col-md-5 --}}
+                    </div> {{-- ./row --}}
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {!! Form::label('comentario', 'Comentário') !!}
+                            <br>
+                            {!! Form::textarea('comentario', null, ['class'=>'form-control', 'id'=>'comentario', 'rows'=>'6']) !!}
+
+                        </div> {{-- ./col-md-12 --}}
+
                     </div> {{-- ./row --}}
                 </div>
                 <div class="modal-footer pause-task">
@@ -237,6 +250,9 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.0/bootstrap-slider.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/lang/summernote-pt-BR.js"></script>
+
 {{-- <script type="text/javascript" src="{{ url('../resources/assets/js/main.js') }}"></script>  --}}
 
 
@@ -267,9 +283,6 @@ document.onkeydown = function(e) {
     }
 
 }
-
-
-
 
 
 // Without JQuery
@@ -378,6 +391,7 @@ function reset(taskid) {
 // Fim timer
 
 
+// DataTables
 $(function () {
     $('#defaulttable').DataTable();
 });
@@ -400,36 +414,58 @@ $('.btn-link').on('click', function(e) {
     
     $.get('tasks/show/' + taskid, function(task) {
         //console.log(task);
-
+        
         if (task.status == null) {
             task.status = 0;
         };
 
         $('#myModalLabelDashboard').html('Task ' + task.descricao);
+    
+        $.get('apontamentos/show/' + taskid, function(apontamento) {
+            console.log(apontamento);
+        // $('.dashboard-body').html('{!! Form::label("created_at", "Criado em ") !!}' +  $.format.date(task.created_at, " dd/MM/yyyy") + '<br>' + '{!! Form::label("user", "Criado por") !!} ' + task.user_id + '<br>' + '{!! Form::label("status", "Conclusão ") !!} ' + task.status + '%' + '<br>');
+            if(apontamento == undefined) {
+                apontamento = '';
+            }
+
+            var result;
+            var table = '<table class="table table-striped table-hover table-bordered"><thead><th>Usuário</th><th>Comentário</th></thead><tbody>';
+            var endtable ='</tbody></table>';
+
+            for(var i = 0; i < apontamento.length; i++) {
+                if (apontamento[i].comentario == null) {
+                    apontamento[i].comentario = 'vazio';
+                };
+                result = result + '<td>' + apontamento[i].name + '<br>' + $.format.date(apontamento[i].created_at, "dd/MM/yyyy HH:mm:ss") + '</td><td>' + apontamento[i].comentario + '</td>';
+            }
+            result = result + endtable;
+            $('.dashboard-body').html(table + result);
+
+
+
+        });
         
-        $('.dashboard-body').html('{!! Form::label("created_at", "Criado em ") !!}' +  $.format.date(task.created_at, " dd/MM/yyyy") + '<br>' + '{!! Form::label("user", "Criado por") !!} ' + task.user_id + '<br>' + '{!! Form::label("status", "Conclusão ") !!} ' + task.status + '%' + '<br>');
     });
+
+
+    
         
 });
 
 
-// Trazer status no slider
-// $('.btn-danger').on('click', function(e) {    
-        
-//     var taskid = $(this).val();
-    
-//     $.get('tasks/show/' + taskid, function(task) {
-//         //console.log(task);
-
-//         if (task.status == null) {
-//             task.status = 0;
-//         };
-
-//         // $('.col-md-6').html('{!! Form::label("status", "Progresso *") !!}<br>{!! Form::text("status", null, ["class"=>"form-inline", "id"=>"ex1", "data-slider-id"=>"ex1Slider", "type"=>"text", "data-slider-min"=>"0", "data-slider-max"=>"100", "data-slider-step"=>"1", "data-slider-value"=>"' + task.status + '"]) !!}');
-//         $('.col-md-6').html('{!! Form::label("status", "Progresso *") !!}<br><input name="status" id="ex1" data-slider-id="ex1Slider" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>');
-//     });
-        
-// });
+// Summernote (paleta de edição comentário)
+$(document).ready(function() {
+    $('#comentario').summernote({
+        lang: 'pt-BR',
+        height: 150,                 // set editor height
+        minHeight: null,             // set minimum height of editor
+        maxHeight: null,             // set maximum height of editor
+        focus: false,                // set focus to editable area after initializing summernote
+        placeholder: 'O que você fez durante esse tempo?',
+        shortcuts: false,
+        files: false,
+    });
+});
 
 
 
@@ -438,3 +474,4 @@ $('.btn-link').on('click', function(e) {
 </script>
 
 @endsection
+

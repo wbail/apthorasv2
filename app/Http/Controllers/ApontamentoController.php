@@ -7,6 +7,7 @@ use App\Http\Requests\ApontamentoRequest;
 use DB;
 use App\Apontamento;
 use App\Project;
+use App\User;
 use View;
 use Auth;
 use Response;
@@ -40,11 +41,10 @@ class ApontamentoController extends Controller {
      */
     public function store(ApontamentoRequest $request) {
         
-        //return $request->all();
-
         $apontamento = new Apontamento();
         $apontamento->hora_inicio = $request->input('hora_inicio');
         $apontamento->hora_fim = Carbon::now();
+        $apontamento->comentario = $request->input('comentario');
         $apontamento->task()->associate($request->input('task'));
         $apontamento->user()->associate(Auth::user()->id);
         $apontamento->save();
@@ -63,7 +63,16 @@ class ApontamentoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        //
+
+        $comm = DB::table('apontamentos as a')
+                ->select('a.*', 'u.name')
+                ->join('users as u', 'u.id', '=', 'a.user_id')
+                ->where('task_id', '=', $id)
+                ->orderBy('a.created_at')
+                ->get();
+
+        return Response::json($comm);
+
     }
 
     /**
