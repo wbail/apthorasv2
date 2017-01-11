@@ -25,7 +25,9 @@ class ClientRequest extends FormRequest
     {
         return [
             'nome_fantasia' => 'required|min:5|regex:/^[a-zA-Z]/',
-            'documento' => 'required|numeric|min:11|unique:clients,documento'
+            'documento' => 'required|numeric|min:11|unique:clients,documento',
+            'email' => 'required|email|unique:clients,email',
+            'telefone' => 'required'
         ];
     }
 
@@ -42,7 +44,10 @@ class ClientRequest extends FormRequest
             'documento.min' => 'O campo CPF / CNPJ deve conter no mínimo 11 dígitos.',
             'documento.max' => 'O campo CPF / CNPJ deve conter no máximo 14 dígitos.',
             'documento.unique' => 'O CPF / CNPJ já existe.',
-            'documento.numeric' => 'O campo CPF / CNPJ deve conter apenas números.'
+            'documento.numeric' => 'O campo CPF / CNPJ deve conter apenas números.',
+            'email.required' => 'O campo E-mail é obrigatório.',
+            'email.email' => 'O campo E-mail deve ser um um e-mail é válido.',
+            'telefone.required' => 'O campo Telefone é obrigatório.',
         ];
     }
 

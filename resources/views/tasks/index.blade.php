@@ -5,9 +5,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.0/css/bootstrap-slider.min.css" />
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
+
 
 
 <style type="text/css">
@@ -19,10 +20,11 @@
 
     <div class="container">
 
+
         <a class="btn btn-link pull-right" href="{{ url('/home') }}">Voltar</a>
 
         <div class="page-header">
-            <h1>Timer</h1>
+            <h1>Tasks</h1>
         </div>
 
         <br>
@@ -66,73 +68,71 @@
 
 
         <div class="row">
-            {{-- <div class="col-md-12"> --}}
-                <br>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Tarefas</h3>
-                    </div> {{-- ./panel-heading --}}
-                    <div class="panel-body">
-                        <table class="table table-striped table-hover table-bordered" id="defaulttable">
-                            <thead>
-                                {{-- <th class="text-left">#</th> --}}
-                                <th class="col-sm-1 text-left">Projeto</th>
-                                <th class="col-sm-1 text-left">Task</th>
-                                <th class="col-sm-1 text-center">Status</th>
-                                <th class="col-sm-1 text-center">Responsável</th>
-                                <th class="col-sm-1 text-center">Data Entrega</th>
-                                <th class="col-sm-2 text-center">Ação</th>
-                                <th class="col-sm-2 text-center">Timer</th>
-                            </thead>
-                            @foreach($tasks as $tasks)
-                            <tbody>
-                                
-                                <td class="text-center"> {{ $tasks->project->titulo }} </td>
-                                <td>
-                                    <button id="{{ $tasks->id }}" value="{{ $tasks->id }}" class="btn btn-link" data-toggle="modal" data-target="#myModalDashboardTask" title="Resumo da tarefa"> {{ $tasks->descricao }} </button>
-                                </td>
-                                <td>
-                                    <div class="progress">
-                                        @if($tasks->status >= 0 && $tasks->status <= 30)
-                                            <div class="progress-bar progress-bar-striped progress-bar-danger active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">{{ $tasks->status }}%</div>
-                                        @elseif($tasks->status > 30 && $tasks->status <= 50)
-                                            <div class="progress-bar progress-bar-striped progress-bar-warning active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">{{ $tasks->status }}%</div>
-                                        @elseif($tasks->status > 50 && $tasks->status <= 70)
-                                            <div class="progress-bar progress-bar-striped progress-bar-info active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">{{ $tasks->status }}%</div>
-                                        @elseif($tasks->status > 70 && $tasks->status < 100)
-                                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">{{ $tasks->status }}%</div>
-                                        @elseif($tasks->status == 100)
-                                            <div class="progress-bar progress-bar-striped progress-bar-success active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">{{ $tasks->status }}%</div>
-                                        @endif
-                                       
-                                    </div>
-                                </td>
-                                <td>{{ $tasks->user->name }}</td>
-                                <td class="text-center"><b>{{ Carbon\Carbon::parse($tasks->prazo_finalizacao)->format('d/m/Y') }}</b></td>
-                                <td class="text-center" valign="center">
-                                    <a id="{{ $tasks->id }}" class="btn btn-warning btn-sm" href="{{ route('tasks.edit', ['id'=>$tasks->id]) }}"><i class="fa fa-pencil"></i> Editar</a>
-                                    <button id="{{ $tasks->id }}" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModalDelTask"><i class="fa fa-trash"></i> Excluir</button>
-                                </td>
-                                <td class="text-center">
-                                    <p><span id="my_timer_{{ $tasks->id }}" value=""> Hora Início: 00:00:00</span></p>
-                                    @if($tasks->status == 100)
-                                    <button id="control_{{ $tasks->id }}" class="btn btn-primary btn-sm" value="{{ $tasks->id }}" onclick="changeState({{ $tasks->id }});" title="Iniciar Timer" disabled="disabled"><i class="fa fa-clock-o"></i></button>
-                                    <button id="control_{{ $tasks->id }}" class="btn btn-danger btn-sm" value="{{ $tasks->id }}" data-toggle="modal" data-target="#myModalPauseTask" onclick="stop_timer({{ $tasks->id }});" title="Parar Timer" disabled="disabled"><i class="fa fa-stop"></i></button>
-                                    <button id="reset_{{ $tasks->id }}" class="btn btn-default btn-sm" value="{{ $tasks->id }}" onclick="reset({{ $tasks->id }});" title="Resetar Timer" disabled="disabled"><i class="fa fa-refresh"></i></button>
-                                    @else
-                                    <button id="control_{{ $tasks->id }}" class="btn btn-primary btn-sm" value="{{ $tasks->id }}" onclick="changeState({{ $tasks->id }});" title="Iniciar Timer"><i class="fa fa-clock-o"></i></button>
-                                    <button id="control_{{ $tasks->id }}" class="btn btn-danger btn-sm" value="{{ $tasks->id }}" data-toggle="modal" data-target="#myModalPauseTask" onclick="stop_timer({{ $tasks->id }});" title="Parar Timer"><i class="fa fa-stop"></i></button>
-                                    <button id="reset_{{ $tasks->id }}" class="btn btn-default btn-sm" value="{{ $tasks->id }}" onclick="reset({{ $tasks->id }});" title="Resetar Timer"><i class="fa fa-refresh"></i></button>
+            <div class="col-md-12">        
+                <table class="table table-striped table-hover table-bordered" id="defaulttable">
+                    <thead>
+                        <tr>
+                            <th class="col-sm-1 text-left">Cód</th>
+                            <th class="col-sm-1 text-left">Projeto</th>
+                            <th class="col-sm-1 text-left">Task</th>
+                            <th class="col-sm-1 text-center">Status</th>
+                            <th class="col-sm-1 text-center">Responsável</th>
+                            <th class="col-sm-1 text-center">Data Entrega</th>
+                            <th class="col-sm-2 text-center">Timer</th>
+                            <th class="col-sm-2 text-center">Ação</th>
+                        </tr>
+                        {{-- <th class="text-left">#</th> --}}
+                    </thead>
+                    <tbody>
+                    @foreach($tasks as $tasks)
+                        <tr>
+                            <td class="text-center"> {{ $tasks->id }} </td>
+                            <td class="text-center"> {{ $tasks->project->titulo }} </td>
+                            <td>
+                                <button id="{{ $tasks->id }}" value="{{ $tasks->id }}" class="btn btn-link" data-toggle="modal" data-target="#myModalDashboardTask" title="Resumo da tarefa"> {{ $tasks->descricao }} </button>
+                            </td>
+                            <td>
+                                <div class="progress">
+                                    @if($tasks->status >= 0 && $tasks->status <= 30)
+                                        <div class="progress-bar progress-bar-striped progress-bar-danger active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">{{ $tasks->status }}%</div>
+                                    @elseif($tasks->status > 30 && $tasks->status <= 50)
+                                        <div class="progress-bar progress-bar-striped progress-bar-warning active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">{{ $tasks->status }}%</div>
+                                    @elseif($tasks->status > 50 && $tasks->status <= 70)
+                                        <div class="progress-bar progress-bar-striped progress-bar-info active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">{{ $tasks->status }}%</div>
+                                    @elseif($tasks->status > 70 && $tasks->status < 100)
+                                        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">{{ $tasks->status }}%</div>
+                                    @elseif($tasks->status == 100)
+                                        <div class="progress-bar progress-bar-striped progress-bar-success active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">{{ $tasks->status }}%</div>
                                     @endif
-                                </td>
-                            </tbody>
-                            @endforeach
-                        </table> {{-- ./table --}}
-                    </div> {{-- ./panel-body --}}
-                </div> {{-- ./panel-default --}}
-            {{-- </div> --}} {{-- ./col-md-12 --}}
+                                   
+                                </div>
+                            </td>
+                            <td>{{ $tasks->user->name }}</td>
+                            <td class="text-center"><b>{{ Carbon\Carbon::parse($tasks->prazo_finalizacao)->format('d/m/Y') }}</b></td>
 
+                            <td class="text-center">
+                                <p><span id="my_timer_{{ $tasks->id }}" value=""> Hora Início: 00:00:00</span></p>
+                                @if($tasks->status == 100)
+                                <button id="control_{{ $tasks->id }}" class="btn btn-primary btn-sm" value="{{ $tasks->id }}" onclick="changeState({{ $tasks->id }});" title="Iniciar Timer" disabled="disabled"><i class="fa fa-clock-o"></i></button>
+                                <button id="control_{{ $tasks->id }}" class="btn btn-danger btn-sm" value="{{ $tasks->id }}" data-toggle="modal" data-target="#myModalPauseTask" onclick="stop_timer({{ $tasks->id }});" title="Parar Timer" disabled="disabled"><i class="fa fa-stop"></i></button>
+                                <button id="reset_{{ $tasks->id }}" class="btn btn-default btn-sm" value="{{ $tasks->id }}" onclick="reset({{ $tasks->id }});" title="Resetar Timer" disabled="disabled"><i class="fa fa-refresh"></i></button>
+                                @else
+                                <button id="control_{{ $tasks->id }}" class="btn btn-primary btn-sm" value="{{ $tasks->id }}" onclick="changeState({{ $tasks->id }});" title="Iniciar Timer"><i class="fa fa-clock-o"></i></button>
+                                <button id="control_{{ $tasks->id }}" class="btn btn-danger btn-sm" value="{{ $tasks->id }}" data-toggle="modal" data-target="#myModalPauseTask" onclick="stop_timer({{ $tasks->id }});" title="Parar Timer"><i class="fa fa-stop"></i></button>
+                                <button id="reset_{{ $tasks->id }}" class="btn btn-default btn-sm" value="{{ $tasks->id }}" onclick="reset({{ $tasks->id }});" title="Resetar Timer"><i class="fa fa-refresh"></i></button>
+                                @endif
+                            </td>
+                            <td class="text-center" valign="center">
+                                <a id="{{ $tasks->id }}" class="btn btn-link btn-lg" href="{{ route('tasks.edit', ['id'=>$tasks->id]) }}" title="Editar"><i class="fa fa-pencil"></i></a>
+                                <button id="{{ $tasks->id }}" class="btn btn-link btn-lg" data-toggle="modal" data-target="#myModalDelTask" title="Excluir"><i class="fa fa-trash"></i> </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table> {{-- ./table --}}
+            </div> {{-- ./col-md-12 --}}
         </div> {{-- ./row --}}
+
     </div> {{-- ./container --}}
 
     <!-- Modal add task-->
@@ -191,12 +191,9 @@
                     <h4 class="modal-title" id="myModalLabelDashboard"></h4>
                 </div>
                 <div class="modal-body dashboard-body">
-                    <br>
-                    
                 </div>
                 <div class="modal-footer dashboard-task">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    
                 </div>
             </div>
         </div>
@@ -241,49 +238,72 @@
     </div>
 
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.js"></script>
-<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" data-require="bootstrap@*" data-semver="3.1.1"></script>
+{{-- <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.8/jquery.mask.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.0/bootstrap-slider.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/lang/summernote-pt-BR.js"></script>
-
-{{-- <script type="text/javascript" src="{{ url('../resources/assets/js/main.js') }}"></script>  --}}
-
-
-
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> --}}
-{{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.js"></script> --}}
-{{-- <script data-require="bootstrap@*" data-semver="3.1.1" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script> --}}
-{{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script> --}}
-{{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.8/jquery.mask.min.js"></script> --}}
-{{-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script> --}}
-{{-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script> --}}
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+ --}}
 
 <script type="text/javascript">
 
-// t para nova tarefa
+// DataTable
+// $(document).ready(function() {
+//     $('#defaulttable').DataTable({
+//         "language": {
+            
+//             "decimal":        "",
+//             "emptyTable":     "Nenhum registro",
+//             "info":           "Mostrando _START_ de _END_ de um total de _TOTAL_ registros",
+//             "infoEmpty":      "Mostrando 0 to 0 de 0 registros",
+//             "infoFiltered":   "(filtrado de _MAX_ registros)",
+//             "infoPostFix":    "",
+//             "thousands":      ",",
+//             "lengthMenu":     "Mostrar _MENU_ registros",
+//             "loadingRecords": "Carregando...",
+//             "processing":     "Procesando...",
+//             "search":         "Procurar:",
+//             "zeroRecords":    "Nenhum registro encontrado",
+//             "paginate": {
+//                 "first":      "Primeiro",
+//                 "last":       "Último",
+//                 "next":       "Próximo",
+//                 "previous":   "Anterior"
+//             },
+            
+//             "aria": {
+//                 "sortAscending":  ": activate to sort column ascending",
+//                 "sortDescending": ": activate to sort column descending"
+//             },
+//         },
 
-document.onkeydown = function(e) {
-    
-    if(e.which == 84) {
-        $('#myModalAddTask').modal("show", function() {
+        
+//     });
+// });
 
+
+// atalho teclado
+var ene = false;
+document.onkeyup = function(e) {
+    if(e.which == 78) ene = false;
+};
+document.onkeydown = function(e){
+    if(e.which == 78) ene = true;
+    if(e.which == 84 && ene == true) {
+         $('#myModalAddTask').modal("show", function() {
             $('#myModalAddTask').on('show.bs.modal', function() {
                 $('#projectid').focus();
-            });
-            
-        });
-        
+            }); 
+        });   
     }
-
 }
-
+// fim atalho teclado
 
 // Without JQuery
 var slider = new Slider('#ex1', {
@@ -391,19 +411,13 @@ function reset(taskid) {
 // Fim timer
 
 
-// DataTables
-$(function () {
-    $('#defaulttable').DataTable();
-});
-
-
 // Deletar task
 $('#myModalDelTask').on('show.bs.modal', function(e) {
     
     var $modal = $(this);
     var taskid = e.relatedTarget.id;
     $modal.find('.modal-title').html('Deseja realmente excluir o item ' + taskid  + '?');
-    $modal.find('.del-task').html('<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button><a href="/tasks/destroy/' + taskid + '" class="btn btn-danger"> Excluir </a>');           
+    $modal.find('.del-task').html('<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button><a href="tasks/destroy/' + taskid + '" class="btn btn-danger"> Excluir </a>');           
 });
 
 
@@ -433,10 +447,10 @@ $('.btn-link').on('click', function(e) {
                 if (apontamento[i].comentario == null) {
                     apontamento[i].comentario = '';
                 };
-                html = html + '<tr><td>' + apontamento[i].name + '<br>' + $.format.date(apontamento[i].created_at, "dd/MM/yyyy HH:mm:ss") + '</td><td>' + apontamento[i].comentario + '</td></tr>';
+                html += '<tr><td>' + apontamento[i].name + '<br>' + $.format.date(apontamento[i].created_at, "dd/MM/yyyy HH:mm:ss") + '</td><td>' + apontamento[i].comentario + '</td></tr>';
             }
-
-            $('.dashboard-body').html(html + '</tbody></table>');
+            html += '</tbody></table>';
+            $('.dashboard-body').html(html);
         
         });
         
@@ -460,7 +474,13 @@ $(document).ready(function() {
 });
 
 
-
+// Bootstrap DateTimePicker
+$(function () {
+    $('#datetimepicker1').datetimepicker({
+        locale: 'pt-br',
+        format: 'DD/MM/YYYY'
+    });
+});
 
 
 </script>

@@ -37,11 +37,12 @@ class ClientController extends Controller {
      */
     public function store(ClientRequest $request) {
         
-        Client::create([
-            'nome_fantasia' => $request->input('nome_fantasia'),
-            'documento' => $request->input('documento'),
-            'user_id' => Auth::user()->id
-        ]);
+        $client = new Client();
+        $client->nome_fantasia = $request->input('nome_fantasia');
+        $client->documento = $request->input('documento');
+        $client->telefone = $request->input('telefone');
+        $client->email = $request->input('email');
+        $client->user()->associate(Auth::user()->id);
 
         return redirect()->route('clients');
     }

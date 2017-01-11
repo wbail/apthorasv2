@@ -20,34 +20,46 @@ const elixir = require('laravel-elixir');
 
 elixir(function(mix) {
 
-	mix.copy('../../../node_modules/bootstrap/dist/fonts', 'public/fonts')
-		.copy('../../../node_modules/font-awesome/fonts', 'public/fonts');
+	mix.copy('../../../bower_components/bootstrap/dist/fonts', 'public/fonts')
+		.copy('../../../bower_components/font-awesome/fonts', 'public/fonts');
 
 	mix.scripts([
 
-		'../../../node_modules/jquery/dist/jquery.js',
-		'../../../node_modules/bootstrap/dist/js/bootstrap.js',
-		'../../../node_modules/datatables/media/js/jquery.dataTables.js',
-		//'../../../node_modules/datatables/media/js/dataTables.bootstrap.js',
-		'../../../node_modules/moment/moment.js',
-		'../../../node_modules/moment/locale/pt-br.js',
-		'../../../node_modules/jquery-mask-plugin/dist/jquery.mask.js',
-		'../../../node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
-	
-		'main.js'
-	], 'js/app.js');
+		'../../../bower_components/jquery/dist/jquery.js',
+		'../../../bower_components/bootstrap/dist/js/bootstrap.js',
+		'../../../bower_components/datatables/media/js/jquery.dataTables.js',
+		'../../../bower_components/datatables/media/js/dataTables.bootstrap.js',
+		'../../../bower_components/moment/moment.js',
+		'../../../bower_components/moment/locale/pt-br.js',
+		'../../../bower_components/jquery-mask-plugin/dist/jquery.mask.js',
+		'../../../bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+		'../../../bower_components/jquery-dateFormat/dist/dateFormat.js',
+		'../../../bower_components/seiyria-bootstrap-slider/dependencies/js/modernizr.js',
+		'../../../bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.js',
+		'../../../bower_components/summernote/dist/summernote.js',
+		'../../../bower_components/summernote/lang/summernote-pt-BR.js',
+
+	], 'public/js/app.js');
 
 	mix.styles([
 
-		'../../../node_modules/bootstrap/dist/css/bootstrap.css',
-		//'../../../node_modules/bootstrap/dist/fonts',
-		'../../../node_modules/datatables/media/css/jquery.dataTables.css',
-		//'../../../node_modules/datatables/media/css/dataTables.bootstrap.css',
-		'../../../node_modules/font-awesome/css/font-awesome.css',
-		//'../../../node_modules/font-awesome/fonts',
-		'../../../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
+		//'../../../bower_components/bootstrap/dist/fonts',
+		//'../../../bower_components/font-awesome/fonts',
+		'../../../bower_components/bootstrap/dist/css/bootstrap.css',
+		'../../../bower_components/datatables/media/css/jquery.dataTables.css',
+		'../../../bower_components/datatables/media/css/dataTables.bootstrap.css',
+		'../../../bower_components/font-awesome/css/font-awesome.css',
+		'../../../bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
+		'../../../bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.css',
+		'../../../bower_components/summernote/dist/summernote.css',
 
-	], 'css/app.css');
+	], 'public/css/app.css');
+
+	mix.version([
+		'public/css/app.css',
+		'public/js/app.js'
+	]);
+
 
 
 });

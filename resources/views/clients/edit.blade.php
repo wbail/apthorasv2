@@ -34,6 +34,12 @@
 				{!! Form::text('documento', $clients->documento, ['class'=>'form-control cnpj', 'title'=>'CPF ou CNPJ do cliente sem pontos']) !!}
 				@endif
 				<br>
+				{!! Form::label('telefone', 'Telefone *') !!}
+				{!! Form::text('telefone', $clients->telefone, ['class'=>'form-control phone_with_ddd', 'title'=>'Telefone com DDD']) !!}
+				<br>
+				{!! Form::label('email', 'E-mail *') !!}
+				{!! Form::text('email', $clients->email, ['class'=>'form-control', 'title'=>'E-mail']) !!}
+				<br>
 				{!! Form::submit('Salvar', ['class'=>'btn btn-primary pull-right']) !!}
 			{!! Form::close() !!}
 

@@ -9,6 +9,8 @@ class Client extends Model {
 	public $fillable = [
 		'nome_fantasia',
 		'documento',
+		'telefone',
+		'email',
 		'user_id'
 	];
 

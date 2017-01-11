@@ -15,6 +15,8 @@
 				<th>#</th>
 				<th>CPF / CNPJ</th>
 				<th>Nome do Cliente</th>
+				<th>Telefone</th>
+				<th>E-mail</th>
 				<th class="text-center">Ação</th>
 			</thead>
 			@foreach($clients as $clients)
@@ -26,9 +28,11 @@
 						<td class="cnpj">{{ $clients->documento }}</td>
 					@endif
 					<td>{{ $clients->nome_fantasia }}</td>
+					<td class="phone_with_ddd">{{ $clients->telefone }}</td>
+					<td>{{ $clients->email }}</td>
 					<td class="text-center">
-                    <a id="{{ $clients->id }}" class="btn btn-warning btn-sm" href="{{ route('clients.edit', ['id'=>$clients->id]) }}"><i class="fa fa-pencil"></i> Editar</a>
-                    <button id="{{ $clients->id }}" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModalDelClient"><i class="fa fa-trash"></i> Excluir</button>
+                    	<a id="{{ $clients->id }}" class="btn btn-warning btn-sm" href="{{ route('clients.edit', ['id'=>$clients->id]) }}"><i class="fa fa-pencil"></i> Editar</a>
+                    	<button id="{{ $clients->id }}" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModalDelClient"><i class="fa fa-trash"></i> Excluir</button>
 					</td>
 				</tbody>
 			@endforeach
