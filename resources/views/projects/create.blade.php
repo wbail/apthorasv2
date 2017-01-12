@@ -4,6 +4,8 @@
 
 	<div class="container">
 
+		<a class="btn btn-link pull-right" href="{{ url('/projects') }}">Voltar</a>
+
 		<div class="page-header">
 			<h1>Novo Projeto</h1>
 		</div>
@@ -39,8 +41,9 @@
 	</div> {{-- ./container --}}
 
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
+{{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.css">
+ --}}
 <script type="text/javascript">
 
     $(function () {

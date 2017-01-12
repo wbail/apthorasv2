@@ -69,7 +69,7 @@
 
         <div class="row">
             <div class="col-md-12">        
-                <table class="table table-striped table-hover table-bordered" id="defaulttable">
+                <table data-order='[[ 0, "desc" ]]' class="table table-striped table-hover table-bordered" id="defaulttable">
                     <thead>
                         <tr>
                             <th class="col-sm-1 text-left">Cód</th>
@@ -78,7 +78,7 @@
                             <th class="col-sm-1 text-center">Status</th>
                             <th class="col-sm-1 text-center">Responsável</th>
                             <th class="col-sm-1 text-center">Data Entrega</th>
-                            <th class="col-sm-2 text-center">Timer</th>
+                            <th class="col-sm-3 text-center">Timer</th>
                             <th class="col-sm-2 text-center">Ação</th>
                         </tr>
                         {{-- <th class="text-left">#</th> --}}
@@ -111,21 +111,22 @@
                             <td class="text-center"><b>{{ Carbon\Carbon::parse($tasks->prazo_finalizacao)->format('d/m/Y') }}</b></td>
 
                             <td class="text-center">
-                                <p><span id="my_timer_{{ $tasks->id }}" value=""> Hora Início: 00:00:00</span></p>
+                                <h6><p><span id="my_timer_{{ $tasks->id }}" value="" title="Hora Início">00:00:00</span></p></h6>
                                 @if($tasks->status == 100)
-                                <button id="control_{{ $tasks->id }}" class="btn btn-primary btn-sm" value="{{ $tasks->id }}" onclick="changeState({{ $tasks->id }});" title="Iniciar Timer" disabled="disabled"><i class="fa fa-clock-o"></i></button>
-                                <button id="control_{{ $tasks->id }}" class="btn btn-danger btn-sm" value="{{ $tasks->id }}" data-toggle="modal" data-target="#myModalPauseTask" onclick="stop_timer({{ $tasks->id }});" title="Parar Timer" disabled="disabled"><i class="fa fa-stop"></i></button>
-                                <button id="reset_{{ $tasks->id }}" class="btn btn-default btn-sm" value="{{ $tasks->id }}" onclick="reset({{ $tasks->id }});" title="Resetar Timer" disabled="disabled"><i class="fa fa-refresh"></i></button>
+                                <button id="control_{{ $tasks->id }}" class="btn btn-link " value="{{ $tasks->id }}" onclick="changeState({{ $tasks->id }});" title="Iniciar Timer" disabled="disabled"><i class="fa fa-clock-o"></i></button>
+                                <button id="control_{{ $tasks->id }}" class="btn btn-link " value="{{ $tasks->id }}" data-toggle="modal" data-target="#myModalPauseTask" onclick="stop_timer({{ $tasks->id }});" title="Parar Timer" disabled="disabled"><i class="fa fa-stop"></i></button>
+                                <button id="reset_{{ $tasks->id }}" class="btn btn-link " value="{{ $tasks->id }}" onclick="reset({{ $tasks->id }});" title="Resetar Timer" disabled="disabled"><i class="fa fa-refresh"></i></button>
                                 @else
-                                <button id="control_{{ $tasks->id }}" class="btn btn-primary btn-sm" value="{{ $tasks->id }}" onclick="changeState({{ $tasks->id }});" title="Iniciar Timer"><i class="fa fa-clock-o"></i></button>
-                                <button id="control_{{ $tasks->id }}" class="btn btn-danger btn-sm" value="{{ $tasks->id }}" data-toggle="modal" data-target="#myModalPauseTask" onclick="stop_timer({{ $tasks->id }});" title="Parar Timer"><i class="fa fa-stop"></i></button>
-                                <button id="reset_{{ $tasks->id }}" class="btn btn-default btn-sm" value="{{ $tasks->id }}" onclick="reset({{ $tasks->id }});" title="Resetar Timer"><i class="fa fa-refresh"></i></button>
+                                <button id="control_{{ $tasks->id }}" class="btn btn-link " value="{{ $tasks->id }}" onclick="changeState({{ $tasks->id }});" title="Iniciar Timer"><i class="fa fa-clock-o"></i></button>
+                                <button id="control_{{ $tasks->id }}" class="btn btn-link " value="{{ $tasks->id }}" data-toggle="modal" data-target="#myModalPauseTask" onclick="stop_timer({{ $tasks->id }});" title="Parar Timer"><i class="fa fa-stop"></i></button>
+                                <button id="reset_{{ $tasks->id }}" class="btn btn-link " value="{{ $tasks->id }}" onclick="reset({{ $tasks->id }});" title="Resetar Timer"><i class="fa fa-refresh"></i></button>
                                 @endif
                             </td>
                             <td class="text-center" valign="center">
-                                <a id="{{ $tasks->id }}" class="btn btn-link btn-lg" href="{{ route('tasks.edit', ['id'=>$tasks->id]) }}" title="Editar"><i class="fa fa-pencil"></i></a>
-                                <button id="{{ $tasks->id }}" class="btn btn-link btn-lg" data-toggle="modal" data-target="#myModalDelTask" title="Excluir"><i class="fa fa-trash"></i> </button>
+                                <a id="{{ $tasks->id }}" class="btn btn-link" href="{{ route('tasks.edit', ['id'=>$tasks->id]) }}" title="Editar"><i class="fa fa-pencil"></i></a>
+                                <button id="{{ $tasks->id }}" class="btn btn-link" data-toggle="modal" data-target="#myModalDelTask" title="Excluir"><i class="fa fa-trash"></i> </button>
                             </td>
+                            
                         </tr>
                     @endforeach
                     </tbody>
@@ -237,6 +238,25 @@
         </div>
     </div>
 
+    <!-- Modal atalho teclado -->
+    <div class="modal fade" id="myModalAtalhoTeclado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabelAtalhoTeclado"></h4>
+                </div>
+                <div class="modal-body atalho-teclado-body">
+                    <p>'F1' = Atalhos</p>
+                    <br>
+                    <p>'nt' = Nova Tarefa</p>
+                </div>
+                <div class="modal-footer atalho-teclado-task">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
@@ -289,6 +309,13 @@
 
 
 // atalho teclado
+
+// Atalhos Teclado
+document.onkeydown = KeyPress(e) {
+      var evtobj = window.event? event : e
+      if (evtobj.keyCode == 90 && evtobj.ctrlKey) alert("Ctrl+z");
+};
+
 var ene = false;
 document.onkeyup = function(e) {
     if(e.which == 78) ene = false;

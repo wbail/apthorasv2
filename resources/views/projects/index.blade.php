@@ -4,6 +4,8 @@
 
 	<div class="container">
 
+		<a class="btn btn-link pull-right" href="{{ url('/home') }}">Voltar</a>
+
 		<div class="page-header">
 			<h1>Projetos</h1>
 		</div>

@@ -54,6 +54,8 @@ $(document).ready(function() {
 });
 
 // atalho teclado
+
+// Nova tarefa
 var ene = false;
 document.onkeyup = function(e) {
     if(e.which == 78) ene = false;
