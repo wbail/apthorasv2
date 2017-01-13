@@ -62,13 +62,13 @@
 
 <script type="text/javascript">
 // Deletar project
-$('#myModalDelProject').on('show.bs.modal', function(e) {
+// $('#myModalDelProject').on('show.bs.modal', function(e) {
     
-    var $modal = $(this);
-    var projectid = e.relatedTarget.id;
-    $modal.find('.modal-title').html('Deseja realmente excluir?');
-    $modal.find('.del-project').html('<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button><a href="projects/destroy/' + projectid + '" class="btn btn-danger"> Excluir </a>');           
-});
+//     var $modal = $(this);
+//     var projectid = e.relatedTarget.id;
+//     $modal.find('.modal-title').html('Deseja realmente excluir?');
+//     $modal.find('.del-project').html('<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button><a href="projects/destroy/' + projectid + '" class="btn btn-danger"> Excluir </a>');           
+// });
 
 </script>
 

@@ -25,9 +25,9 @@ class TaskController extends Controller {
         $tasks = Task::with('user', 'project')->get();
         
         return View::make('tasks.index', [
-            'tasks'=>$tasks,
-            'users'=>DB::table('users')->orderBy('name')->pluck('name', 'id'),
-            'projects'=>DB::table('projects')->orderBy('titulo')->pluck('titulo', 'id')
+            'tasks' => $tasks,
+            'users' => DB::table('users')->orderBy('name')->pluck('name', 'id'),
+            'projects' => DB::table('projects')->orderBy('titulo')->pluck('titulo', 'id')
         ]);
 
     }

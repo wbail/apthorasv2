@@ -4,6 +4,8 @@
 
 	<div class="container">
 
+		<a class="btn btn-link pull-right" href="{{ url('/projects') }}">Voltar</a>
+
 		<div class="page-header">
 			<h1>Editando o Projeto '{{ $projects->titulo }}'</h1>
 		</div>

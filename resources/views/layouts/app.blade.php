@@ -22,13 +22,6 @@
     
     {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}"> --}}
     
-    <style type="text/css">
-
-        #ex1Slider .slider-selection {
-            background: #BABABA;
-        }
-
-    </style>
 
     <!-- Styles -->
 {{--     
@@ -61,7 +54,8 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/home') }}" disabled="disabled">
-                        {{ config('app.name', 'Laravel') }}
+                        {{-- config('app.name', 'Laravel') --}}
+                        AptHoras²
                     </a>
                     <a class="navbar-brand" href="{{ url('/home') }}" title="Página Inicial"><i class="fa fa-home"></i></a>
                 </div>
@@ -128,8 +122,9 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdn.datatables.net/plug-ins/1.10.13/api/sum().js"></script>
 
-    <script type="text/javascript" src="{{ asset('../resources/assets/js/main.js') }}"></script>
-    
+
+    {{-- <script type="text/javascript" src="{{ asset('../resources/assets/js/main.js') }}"></script> --}}
+    <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
 
 
     <!-- Scripts -->

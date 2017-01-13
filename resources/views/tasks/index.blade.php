@@ -23,7 +23,7 @@
         <a class="btn btn-link pull-right" href="{{ url('/home') }}">Voltar</a>
 
         <div class="page-header">
-            <h1>Tasks</h1>
+            <h1>Tarefas</h1>
         </div>
 
         <br>
@@ -68,7 +68,7 @@
 
         <div class="row">
             <div class="col-md-12">        
-                <table data-order='[[ 0, "desc" ]]' class="table table-striped table-hover table-bordered" id="defaulttable">
+                <table data-order='[[0, "desc"]]' class="table table-striped table-hover table-bordered" id="defaulttable">
                     <thead>
                         <tr>
                             <th class="col-sm-1 text-left">Cód</th>
@@ -93,22 +93,31 @@
                             <td>
                                 <div class="progress">
                                     @if($tasks->status >= 0 && $tasks->status <= 30)
-                                        <div class="progress-bar progress-bar-striped progress-bar-danger active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">{{ $tasks->status }}%</div>
+                                        <div class="progress-bar progress-bar-striped progress-bar-danger active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">
+                                            {{ $tasks->status }}%
+                                        </div>
                                     @elseif($tasks->status > 30 && $tasks->status <= 50)
-                                        <div class="progress-bar progress-bar-striped progress-bar-warning active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">{{ $tasks->status }}%</div>
+                                        <div class="progress-bar progress-bar-striped progress-bar-warning active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">
+                                            {{ $tasks->status }}%
+                                        </div>
                                     @elseif($tasks->status > 50 && $tasks->status <= 70)
-                                        <div class="progress-bar progress-bar-striped progress-bar-info active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">{{ $tasks->status }}%</div>
+                                        <div class="progress-bar progress-bar-striped progress-bar-info active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">
+                                            {{ $tasks->status }}%
+                                        </div>
                                     @elseif($tasks->status > 70 && $tasks->status < 100)
-                                        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">{{ $tasks->status }}%</div>
+                                        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">
+                                            {{ $tasks->status }}%
+                                        </div>
                                     @elseif($tasks->status == 100)
-                                        <div class="progress-bar progress-bar-striped progress-bar-success active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">{{ $tasks->status }}%</div>
+                                        <div class="progress-bar progress-bar-striped progress-bar-success active" role="progressbar" aria-valuenow="{{ $tasks->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tasks->status }}%" title="{{ $tasks->status }}%">
+                                            {{ $tasks->status }}%
+                                        </div>
                                     @endif
                                    
                                 </div>
                             </td>
                             <td>{{ $tasks->user->name }}</td>
                             <td class="text-center"><b>{{ Carbon\Carbon::parse($tasks->prazo_finalizacao)->format('d/m/Y') }}</b></td>
-
                             <td class="text-center">
                                 <h6><p><span id="my_timer_{{ $tasks->id }}" value="" title="Hora Início">00:00:00</span></p></h6>
                                 @if($tasks->status == 100)
@@ -124,8 +133,7 @@
                             <td class="text-center" valign="center">
                                 <a id="{{ $tasks->id }}" class="btn btn-link" href="{{ route('tasks.edit', ['id'=>$tasks->id]) }}" title="Editar"><i class="fa fa-pencil"></i></a>
                                 <button id="{{ $tasks->id }}" class="btn btn-link" data-toggle="modal" data-target="#myModalDelTask" title="Excluir"><i class="fa fa-trash"></i> </button>
-                            </td>
-                            
+                            </td>  
                         </tr>
                     @endforeach
                     </tbody>
@@ -257,68 +265,75 @@
         </div>
     </div>
 
-{{-- <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.8/jquery.mask.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.0/bootstrap-slider.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/lang/summernote-pt-BR.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script> --}}
+{{-- 
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.8/jquery.mask.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.0/bootstrap-slider.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/lang/summernote-pt-BR.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.13/api/sum().js"></script>
+ --}}
 
 
 <script type="text/javascript">
 
 // DataTable
-// $(document).ready(function() {
+$(document).ready(function() {
 
-//     $('#defaulttable').DataTable({
-//         "language": {
+    $('#defaulttable').DataTable({
+        "language": {
             
-//             "decimal":        "",
-//             "emptyTable":     "Nenhum registro",
-//             "info":           "Mostrando _START_ de _END_ de um total de _TOTAL_ registros",
-//             "infoEmpty":      "Mostrando 0 to 0 de 0 registros",
-//             "infoFiltered":   "(filtrado de _MAX_ registros)",
-//             "infoPostFix":    "",
-//             "thousands":      ",",
-//             "lengthMenu":     "Mostrar _MENU_ registros",
-//             "loadingRecords": "Carregando...",
-//             "processing":     "Procesando...",
-//             "search":         "Procurar:",
-//             "zeroRecords":    "Nenhum registro encontrado",
-//             "paginate": {
-//                 "first":      "Primeiro",
-//                 "last":       "Último",
-//                 "next":       "Próximo",
-//                 "previous":   "Anterior"
-//             },
-            
-//             "aria": {
-//                 "sortAscending":  ": activate to sort column ascending",
-//                 "sortDescending": ": activate to sort column descending"
-//             },
-//         }, // fim language
-//     });
-// });
+            "decimal":        "",
+            "emptyTable":     "Nenhum registro",
+            "info":           "Mostrando _START_ de _END_ de um total de _TOTAL_ registros",
+            "infoEmpty":      "Mostrando 0 to 0 de 0 registros",
+            "infoFiltered":   "(filtrado de _MAX_ registros)",
+            "infoPostFix":    "",
+            "thousands":      ",",
+            "lengthMenu":     "Mostrar _MENU_ registros",
+            "loadingRecords": "Carregando...",
+            "processing":     "Procesando...",
+            "search":         "Procurar:",
+            "zeroRecords":    "Nenhum registro encontrado",
+            "paginate": {
+                "first":      "Primeiro",
+                "last":       "Último",
+                "next":       "Próximo",
+                "previous":   "Anterior"
+            },
+        },
+        // fim language
+    })
+});
 
 // atalho teclado
 
 // Atalhos Teclado
-document.onkeydown = KeyPress(e) {
-      var evtobj = window.event? event : e
-      if (evtobj.keyCode == 90 && evtobj.ctrlKey) alert("Ctrl+z");
-};
+$(document).onkeydown = KeyPress(e) {
+    var evtobj = window.event ? event : e
+    if (evtobj.keyCode == 90 && evtobj.ctrlKey) {
+        alert("Ctrl+z");
+    }
+}
 
 var ene = false;
 document.onkeyup = function(e) {
-    if(e.which == 78) ene = false;
-};
-document.onkeydown = function(e){
-    if(e.which == 78) ene = true;
+    if(e.which == 78) {
+        ene = false;
+    }
+}
+document.onkeydown = function(e) {
+    
+    if(e.which == 78) {
+        ene = true;
+    };
+
     if(e.which == 84 && ene == true) {
          $('#myModalAddTask').modal("show", function() {
             $('#myModalAddTask').on('show.bs.modal', function() {
@@ -329,12 +344,12 @@ document.onkeydown = function(e){
 }
 // fim atalho teclado
 
-// Without JQuery
-var slider = new Slider('#ex1', {
-    formatter: function(value) {
-        return value;
-    }
-});
+// Slider JQuery
+// $('#ex1').slider({
+//     formatter: function(value) {
+//         return 'Current value: ' + value;
+//     }
+// });
 
 
 // Timer
@@ -468,11 +483,14 @@ $('.btn-link').on('click', function(e) {
             var html = '<table class="table table-striped table-hover table-bordered"><thead><th>Usuário</th><th>Comentário</th></thead><tbody><tr>';
            
             for(var i = 0; i < apontamento.length; i++) {
+                
                 if (apontamento[i].comentario == null) {
                     apontamento[i].comentario = '';
                 };
+                
                 html += '<tr><td>' + apontamento[i].name + '<br>' + $.format.date(apontamento[i].created_at, "dd/MM/yyyy HH:mm:ss") + '</td><td>' + apontamento[i].comentario + '</td></tr>';
-            }
+            };
+            
             html += '</tbody></table>';
             $('.dashboard-body').html(html);
         
