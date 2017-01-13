@@ -31,6 +31,7 @@ class ClientRequest extends FormRequest
                 'required',
                 'numeric',
                 'min:11',
+                'integer',
                 Rule::unique('clients')->ignore($this->id),
             ],
             'email' => [
@@ -38,7 +39,7 @@ class ClientRequest extends FormRequest
                 'email',
                 Rule::unique('clients')->ignore($this->id),
             ],
-            'telefone' => 'required'
+            'telefone' => 'required|integer|numeric'
         ];
     }
 

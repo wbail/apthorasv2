@@ -38,6 +38,7 @@ elixir(function(mix) {
 		'../../../bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.js',
 		'../../../bower_components/summernote/dist/summernote.js',
 		'../../../bower_components/summernote/lang/summernote-pt-BR.js',
+		'../../../resources/assets/js/main.js'
 
 	], 'public/js/app.js');
 
@@ -54,12 +55,6 @@ elixir(function(mix) {
 		'../../../bower_components/summernote/dist/summernote.css',
 
 	], 'public/css/app.css');
-
-	mix.version([
-		'public/css/app.css',
-		'public/js/app.js'
-	]);
-
 
 
 });

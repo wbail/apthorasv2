@@ -10,17 +10,20 @@
 			<h1>Clientes</h1>
 		</div>
 
-		<table class="table table-striped">
+		<table class="table table-striped table-hover table-bordered" id="defaulttable">
 			<thead>
-				<th>#</th>
-				<th>CPF / CNPJ</th>
-				<th>Nome do Cliente</th>
-				<th>Telefone</th>
-				<th>E-mail</th>
-				<th class="text-center">Ação</th>
+				<tr>
+					<th>#</th>
+					<th>CPF / CNPJ</th>
+					<th>Nome do Cliente</th>
+					<th>Telefone</th>
+					<th>E-mail</th>
+					<th class="text-center">Ação</th>
+				</tr>
 			</thead>
+			<tbody>
 			@foreach($clients as $clients)
-				<tbody>
+				<tr>
 					<td>{{ $clients->id }}</td>
 					@if(strlen($clients->documento) == 11)
 						<td class="cpf">{{ $clients->documento }}</td>
@@ -31,11 +34,12 @@
 					<td class="phone_with_ddd">{{ $clients->telefone }}</td>
 					<td>{{ $clients->email }}</td>
 					<td class="text-center">
-                    	<a id="{{ $clients->id }}" class="btn btn-warning btn-sm" href="{{ route('clients.edit', ['id'=>$clients->id]) }}"><i class="fa fa-pencil"></i> Editar</a>
-                    	<button id="{{ $clients->id }}" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModalDelClient"><i class="fa fa-trash"></i> Excluir</button>
+                    	<a id="{{ $clients->id }}" class="btn btn-warning btn-sm" href="{{ route('clients.edit', ['id'=>$clients->id]) }}" title="Editar"><i class="fa fa-pencil"></i> Editar</a>
+                    	<button id="{{ $clients->id }}" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModalDelClient" title="Excluir"><i class="fa fa-trash"></i> Excluir</button>
 					</td>
-				</tbody>
+				</tr>
 			@endforeach
+			</tbody>
 		</table> {{-- ./table --}}
 
 	</div> {{-- ./container --}}
@@ -53,19 +57,5 @@
             </div>
         </div>
     </div>
-
-<script type="text/javascript">
-
-// Deletar Client
-$('#myModalDelClient').on('show.bs.modal', function(e) {
-    
-    var $modal = $(this);
-    var clientid = e.relatedTarget.id;
-    $modal.find('.modal-title').html('Deseja realmente excluir?');
-    $modal.find('.del-client').html('<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button><a href="clients/destroy/' + clientid + '" class="btn btn-danger"> Excluir </a>');           
-});
-
-
-</script>
 
 @endsection

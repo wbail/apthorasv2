@@ -7,7 +7,7 @@ $('.phone').mask('00000-0000');
 $('.phone_with_ddd').mask('(00) 00000-0000');
 $('.phone_us').mask('(000) 000-0000');
 $('.mixed').mask('AAA 000-S0S');
-$('.cpf').mask('000.000.000-00', {reverse: true});
+$('.cpf').mask('000.000.000-00');
 $('.cnpj').mask('00.000.000/0000-00');
 
 $('.btn-primary').click(function(){
@@ -72,12 +72,19 @@ document.onkeydown = function(e){
 }
 // fim atalho teclado
 
+// Slider JQuery
+$('#ex1').slider({
+    formatter: function(value) {
+        return value;
+    }
+});
 // Without JQuery
 var slider = new Slider('#ex1', {
     formatter: function(value) {
         return value;
     }
 });
+
 
 
 // Timer
@@ -177,6 +184,23 @@ function reset(taskid) {
 }
 // Fim timer
 
+// Deletar project
+$('#myModalDelProject').on('show.bs.modal', function(e) {
+    
+    var $modal = $(this);
+    var projectid = e.relatedTarget.id;
+    $modal.find('.modal-title').html('Deseja realmente excluir?');
+    $modal.find('.del-project').html('<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button><a href="projects/destroy/' + projectid + '" class="btn btn-danger"> Excluir </a>');           
+});
+
+// Deletar Client
+$('#myModalDelClient').on('show.bs.modal', function(e) {
+    
+    var $modal = $(this);
+    var clientid = e.relatedTarget.id;
+    $modal.find('.modal-title').html('Deseja realmente excluir?');
+    $modal.find('.del-client').html('<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button><a href="clients/destroy/' + clientid + '" class="btn btn-danger"> Excluir </a>');           
+});
 
 // Deletar task
 $('#myModalDelTask').on('show.bs.modal', function(e) {

@@ -42,7 +42,7 @@ class UserController extends Controller {
                               group by t.id, t.descricao, t.status, u.name, p.titulo, t.created_at;', [Auth::user()->id]);
         
         $query = collect($query);
-            
+        
         return View::make('users.index', ['tasks'=>$query]);
 
     }

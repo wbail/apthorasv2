@@ -43,6 +43,7 @@ class ClientController extends Controller {
         $client->telefone = $request->input('telefone');
         $client->email = $request->input('email');
         $client->user()->associate(Auth::user()->id);
+        $client->save();
 
         return redirect()->route('clients');
     }

@@ -32,7 +32,7 @@
 					{!! Form::text('nome_fantasia', null, ['class'=>'form-control', 'title'=>'Nome fantiasia do cliente']) !!}
 					<br>
 					{!! Form::label('documento', 'CPF ou CNPJ *') !!}
-					{!! Form::number('documento', null, ['class'=>'form-control', 'title'=>'CPF ou CNPJ do cliente sem pontos']) !!}
+					{!! Form::text('documento', null, ['class'=>'form-control cpf', 'min'=>'0', 'title'=>'CPF ou CNPJ do cliente sem pontos']) !!}
 				</div>
 			</div>
 
@@ -58,9 +58,6 @@
 		</div> {{-- ./col-md-6 --}}
 				{!! Form::submit('Salvar', ['class'=>'btn btn-primary pull-right']) !!}
 			{!! Form::close() !!}
-
-
-
 
 	</div> {{-- ./container --}}
 

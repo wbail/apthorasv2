@@ -10,18 +10,21 @@
 			<h1>Projetos</h1>
 		</div>
 
-		<table class="table table-striped">
+		<table class="table table-striped table-hover table-bordered" id="defaulttable">
 			<thead>
-				<th>#</th>
-				<th>Título</th>
-				<th>Data de Entrega</th>
-				<th>Cliente</th>
-				<th>Inserido Por</th>
-				<th>Status</th>
-				<th>Ação</th>
+				<tr>
+					<th>#</th>
+					<th>Título</th>
+					<th>Data de Entrega</th>
+					<th>Cliente</th>
+					<th>Inserido Por</th>
+					<th>Status</th>
+					<th class="text-center">Ação</th>
+				</tr>
 			</thead>
+			<tbody>
 			@foreach($projects as $projects)
-				<tbody>
+				<tr>
 					<td>{{ $projects->id }}</td>
 					<td>{{ $projects->titulo }}</td>
 					<td>{{ Carbon\Carbon::parse($projects->data_entrega)->format('d/m/Y') }}</td>
@@ -32,12 +35,13 @@
 					@else
 						<td>Finalizado</td>
 					@endif
-					<td>
+					<td class="text-center">
 						<a href="{{ route('projects.edit', ['id'=>$projects->id]) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i> Editar</a>
 						<button id="{{ $projects->id }}" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModalDelProject"><i class="fa fa-trash"></i> Excluir</button>
 					</td>
-				</tbody>
+				</tr>
 			@endforeach
+			</tbody>
 		</table> {{-- ./table --}}
 
 	</div> {{-- ./container --}}
@@ -56,9 +60,7 @@
         </div>
     </div>
 
-
 <script type="text/javascript">
-
 // Deletar project
 $('#myModalDelProject').on('show.bs.modal', function(e) {
     
@@ -67,7 +69,6 @@ $('#myModalDelProject').on('show.bs.modal', function(e) {
     $modal.find('.modal-title').html('Deseja realmente excluir?');
     $modal.find('.del-project').html('<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button><a href="projects/destroy/' + projectid + '" class="btn btn-danger"> Excluir </a>');           
 });
-
 
 </script>
 
