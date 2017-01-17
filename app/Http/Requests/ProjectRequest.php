@@ -25,8 +25,10 @@ class ProjectRequest extends FormRequest
     {
         return [
             'titulo' => 'required|min:5',
-            'cliente' => 'required',
-            'data_entrega' => 'required|date_format:d/m/Y'
+            'client' => 'required',
+            'data_entrega' => 'required|date_format:d/m/Y',
+            'fase' => 'required',
+            'status' => 'required|numeric|min:0|max:100'
         ];
     }
 
@@ -39,7 +41,9 @@ class ProjectRequest extends FormRequest
             'titulo.required' => 'O campo Título é obrigatório.',
             'titulo.min' => 'O campo Título deve conter no mínimo 5 caracteres.',
             'cliente.required' => 'O campo Cliente é obrigatório.',
-            'data_entrega.required' => 'O campo Data de Entrega é obrigatório.'
+            'data_entrega.required' => 'O campo Data de Entrega é obrigatório.',
+            'fase.required' => 'O campo Fase é obrigatório.',
+            'status.required' => 'O campo Status é obrigatório.',
         ];
     }
 

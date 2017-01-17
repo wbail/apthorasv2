@@ -28,10 +28,16 @@
 				{!! Form::text('titulo', null, ['class'=>'form-control', 'title'=>'Título do Projeto']) !!}
 				<br>
 				{!! Form::label('Cliente *') !!}
-				{!! Form::select('cliente', $clients, null, ['class'=>'form-control', 'placeholder'=>'', 'title'=>'Cliente dono do projeto']) !!}
+				{!! Form::select('client', $clients, null, ['class'=>'form-control', 'placeholder'=>'', 'title'=>'Cliente dono do projeto']) !!}
 				<br>
 				{!! Form::label('Data de Entrega *') !!}
 				{!! Form::text('data_entrega', null, ['class'=>'form-control', 'title'=>'Data de entrega do projeto', 'id'=>'datetimepicker1']) !!}
+				<br>
+				{!! Form::label('Fase *') !!}
+				{!! Form::select('fase', $fase, null, ['class'=>'form-control', 'placeholder'=>'', 'title'=>'Fase do Projeto']) !!}
+				<br>
+				{!! Form::label('Status *') !!}
+				{!! Form::number('status', null, ['class'=>'form-control', 'min'=>'0', 'max'=>'100', 'title'=>'Status do Projeto']) !!}
 				<br>
 				{!! Form::submit('Salvar', ['class'=>'btn btn-primary pull-right']) !!}
 			{!! Form::close() !!}

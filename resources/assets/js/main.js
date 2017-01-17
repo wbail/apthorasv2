@@ -75,6 +75,7 @@ document.onkeydown = function(e){
 //Slider JQuery
 $('#ex1').slider({
     formatter: function(value) {
+        tooltip: 'always',
         return value;
     }
 });

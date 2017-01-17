@@ -6,12 +6,16 @@ use Illuminate\Http\Request;
 use App\Http\Requests\TaskRequest;
 use Validator;
 
+use App\Mail\TasksRemember;
+use Mail;
 use DB;
 use App\Task;
+use App\User;
 use App\Project;
 use Response;
 use View;
 use Redirect;
+use Carbon\Carbon;
 
 class TaskController extends Controller {
     
@@ -119,4 +123,44 @@ class TaskController extends Controller {
         return redirect()->route('tasks');
     
     }
+
+    /**
+     * Envia lembrete de tarefa para o responsável
+     * 
+     * @param  int  $taskid  
+     * @return Response
+     */
+    public function remember($taskid) {
+        
+        Mail::to(Task::find($taskid)->user->email)
+            ->send(new TasksRemember(Task::find($taskid)));
+        
+    }
+
+    public function chama() {
+
+        $query = DB::select('select count(t.id) as qnt
+                                  from tasks as t
+                                 where t.status < 100
+                                   and date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 1 day), \'%d/%m/%Y\')
+                                    or date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 3 day), \'%d/%m/%Y\')
+                                    or date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 7 day), \'%d/%m/%Y\');');
+
+        if ($query > 0) {
+            $result = DB::select('select t.id
+                                      from tasks as t
+                                     where t.status < 100
+                                       and date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 1 day), \'%d/%m/%Y\')
+                                        or date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 3 day), \'%d/%m/%Y\')
+                                        or date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 7 day), \'%d/%m/%Y\');');   
+
+            for ($i = 0; $i < count($result); $i++) {
+                TaskController::remember($result[$i]->id);
+                sleep(10);
+            }
+
+        }
+    }
+
+
 }

@@ -221,7 +221,7 @@
                         <div class="col-md-6">
                             {!! Form::label('status', 'Progresso *') !!}
                             <br>
-                            {!! Form::text('status', null, ['class'=>'form-inline', 'id'=>'ex1', 'data-slider-id'=>'ex1Slider', 'type'=>'text', 'data-slider-min'=>'0', 'data-slider-max'=>'100', 'data-slider-step'=>'1', 'data-slider-value'=>'0']) !!}
+                            {!! Form::text('status', null, ['class'=>'form-inline', 'id'=>'ex1', 'data-slider-id'=>'ex1Slider', 'type'=>'text', 'data-slider-min'=>'0', 'data-slider-max'=>'100', 'data-slider-step'=>'1', 'value'=>'0']) !!}
                         </div> {{-- ./col-md-6 --}}
                         <div class="col-md-5"></div> {{-- ./col-md-5 --}}
                     </div> {{-- ./row --}}
@@ -345,11 +345,12 @@ document.onkeydown = function(e) {
 // fim atalho teclado
 
 // Slider JQuery
-// $('#ex1').slider({
-//     formatter: function(value) {
-//         return 'Current value: ' + value;
-//     }
-// });
+$('#ex1').slider({
+    formatter: function(value) {
+        tooltip: 'always',
+        return value;
+    }
+});
 
 
 // Timer
@@ -466,16 +467,20 @@ $('.btn-link').on('click', function(e) {
     var taskid = $(this).val();
     
     $.get('tasks/show/' + taskid, function(task) {
-        //console.log(task);
         
+
         if (task.status == null) {
             task.status = 0;
         };
 
         $('#myModalLabelDashboard').html('Task ' + task.descricao);
+
+        $('#ex1').value = task.status;
+
     
         $.get('apontamentos/show/' + taskid, function(apontamento) {
             
+
             if(apontamento == undefined) {
                 apontamento = '';
             }

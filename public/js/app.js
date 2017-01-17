@@ -44222,20 +44222,13 @@ document.onkeydown = function(e){
 }
 // fim atalho teclado
 
-// Slider JQuery
+//Slider JQuery
 $('#ex1').slider({
     formatter: function(value) {
+        tooltip: 'always',
         return value;
     }
 });
-// Without JQuery
-var slider = new Slider('#ex1', {
-    formatter: function(value) {
-        return value;
-    }
-});
-
-
 
 // Timer
 var active = false;

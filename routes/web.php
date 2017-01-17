@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function() {
-    return view('welcome');
+    return view('layouts.index');
 });
 
 Route::get('/cep', function() {
@@ -35,7 +35,9 @@ Route::group(['prefix'=>'tasks','where'=>['id'=>'[0-9]+']], function() {
 	Route::put('update/{id}', ['as'=>'tasks.update', 'uses'=>'TaskController@update', 'middleware' => 'auth']);
 	Route::get('destroy/{id}', ['as'=>'tasks.destroy', 'uses'=>'TaskController@destroy', 'middleware' => 'auth']);
 	Route::get('show/{id}', ['as'=>'tasks.show', 'uses'=>'TaskController@show', 'middleware' => 'auth']);
-	
+	Route::get('remember/{id}', ['as'=>'tasks.remember', 'uses'=>'TaskController@remember', 'middleware' => 'auth']);
+	Route::get('chama', ['as'=>'tasks.chama', 'uses'=>'TaskController@chama', 'middleware' => 'auth']);
+
 });
 
 //Com autentição

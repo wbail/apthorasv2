@@ -18,6 +18,7 @@
 					<th>Data de Entrega</th>
 					<th>Cliente</th>
 					<th>Inserido Por</th>
+					<th>Fase</th>
 					<th>Status</th>
 					<th class="text-center">Ação</th>
 				</tr>
@@ -30,11 +31,42 @@
 					<td>{{ Carbon\Carbon::parse($projects->data_entrega)->format('d/m/Y') }}</td>
 					<td>{{ $projects->client->nome_fantasia }}</td>
 					<td>{{ $projects->user->name }}</td>
-					@if($projects->status == 0)
+					@if($projects->fase == 0)
 						<td>Iniciação</td>
-					@else
-						<td>Finalizado</td>
+					@elseif($projects->fase == 1)
+						<td>Planejamento</td>
+					@elseif($projects->fase == 2)
+						<td>Execução</td>
+					@elseif($projects->fase == 3)
+						<td>Monitoramento e Controle</td>
+					@elseif($projects->fase == 4)
+						<td>Finalização</td>
 					@endif
+					<td>
+			            <div class="progress">
+	                        @if($projects->status >= 0 && $projects->status <= 30)
+	                            <div class="progress-bar progress-bar-striped progress-bar-danger active" role="progressbar" aria-valuenow="{{ $projects->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $projects->status }}%" title="{{ $projects->status }}%">
+	                                {{ $projects->status }}%
+	                            </div>
+	                        @elseif($projects->status > 30 && $projects->status <= 50)
+	                            <div class="progress-bar progress-bar-striped progress-bar-warning active" role="progressbar" aria-valuenow="{{ $projects->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $projects->status }}%" title="{{ $projects->status }}%">
+	                                {{ $projects->status }}%
+	                            </div>
+	                        @elseif($projects->status > 50 && $projects->status <= 70)
+	                            <div class="progress-bar progress-bar-striped progress-bar-info active" role="progressbar" aria-valuenow="{{ $projects->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $projects->status }}%" title="{{ $projects->status }}%">
+	                                {{ $projects->status }}%
+	                            </div>
+	                        @elseif($projects->status > 70 && $projects->status < 100)
+	                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ $projects->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $projects->status }}%" title="{{ $projects->status }}%">
+	                                {{ $projects->status }}%
+	                            </div>
+	                        @elseif($projects->status == 100)
+	                            <div class="progress-bar progress-bar-striped progress-bar-success active" role="progressbar" aria-valuenow="{{ $projects->status }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $projects->status }}%" title="{{ $projects->status }}%">
+	                                {{ $projects->status }}%
+	                            </div>
+	                        @endif
+	                    </div> {{-- ./progress --}}
+					</td>
 					<td class="text-center">
 						<a href="{{ route('projects.edit', ['id'=>$projects->id]) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i> Editar</a>
 						<button id="{{ $projects->id }}" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModalDelProject"><i class="fa fa-trash"></i> Excluir</button>

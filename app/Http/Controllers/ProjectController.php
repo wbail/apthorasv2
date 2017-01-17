@@ -16,7 +16,19 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('projects.index', ['projects'=>Project::all()]);
+
+        $fase = [
+            '0' => 'Iniciação',
+            '1' => 'Planejamento',
+            '2' => 'Execução',
+            '3' => 'Monitoramento e Controle',
+            '4' => 'Finalização'
+        ];
+
+        return view('projects.index', [
+            'fase' => $fase,
+            'projects' => Project::all()
+        ]);
     }
 
     /**
@@ -26,7 +38,18 @@ class ProjectController extends Controller
      */
     public function create() {
 
-        return view('projects.create', ['clients'=>DB::table('clients')->pluck('nome_fantasia', 'id')]);
+        $fase = [
+            '0' => 'Iniciação',
+            '1' => 'Planejamento',
+            '2' => 'Execução',
+            '3' => 'Monitoramento e Controle',
+            '4' => 'Finalização'
+        ];
+        
+        return view('projects.create', [
+            'clients' => DB::table('clients')->pluck('nome_fantasia', 'id'),
+            'fase' => $fase
+        ]);
     }
 
     /**
@@ -40,7 +63,9 @@ class ProjectController extends Controller
         $project = new Project();
         $project->titulo = $request->input('titulo');
         $project->data_entrega = date("Y-m-d H:m:s",strtotime(str_replace('/','-',$request->input('data_entrega'))));
-        $project->client()->associate($request->input('cliente'));
+        $project->fase = $request->input('fase');
+        $project->status = $request->input('status');
+        $project->client()->associate($request->input('client'));
         $project->user()->associate(Auth::user()->id);
         $project->save();
 
@@ -64,7 +89,20 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        return view('projects.edit', ['projects'=>Project::find($id)]);
+
+        $fase = [
+            '0' => 'Iniciação',
+            '1' => 'Planejamento',
+            '2' => 'Execução',
+            '3' => 'Monitoramento e Controle',
+            '4' => 'Finalização'
+        ];
+
+        return view('projects.edit', [
+            'clients' => DB::table('clients')->pluck('nome_fantasia', 'id'),
+            'fase' => $fase,
+            'projects' => Project::find($id)
+        ]);
     }
 
     /**
@@ -75,7 +113,17 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(ProjectRequest $request, $id) {
-        // Alterar a fase do projeto
+        
+        $project = Project::find($id);
+        $project->titulo = $request->input('titulo');
+        $project->fase = $request->input('fase');
+        $project->status = $request->input('status');
+        $project->data_entrega = $request->input('data_entrega');
+        $project->client()->associate($request->input('client'));
+
+        $project->save();
+
+        return redirect()->route('projects');
     }
 
     /**
