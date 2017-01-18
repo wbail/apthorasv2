@@ -52,8 +52,6 @@ class Kernel extends ConsoleKernel {
 
         })->daily();
 
-
-
     }
 
     /**

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+{{-- 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -17,7 +17,7 @@
         }
     </style>
 
-
+ --}}
     <div class="container">
 
         <a class="btn btn-link pull-right" href="{{ url('/home') }}">Voltar</a>
@@ -279,7 +279,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.13/api/sum().js"></script>
  --}}
-
+{{-- 
 
 <script type="text/javascript">
 
@@ -315,13 +315,6 @@ $(document).ready(function() {
 // atalho teclado
 
 // Atalhos Teclado
-$(document).onkeydown = KeyPress(e) {
-    var evtobj = window.event ? event : e
-    if (evtobj.keyCode == 90 && evtobj.ctrlKey) {
-        alert("Ctrl+z");
-    }
-}
-
 var ene = false;
 document.onkeyup = function(e) {
     if(e.which == 78) {
@@ -532,6 +525,6 @@ $(function () {
 
 </script>
 
-
+ --}}
 @endsection
 

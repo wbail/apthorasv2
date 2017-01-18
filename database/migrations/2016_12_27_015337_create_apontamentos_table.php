@@ -19,7 +19,7 @@ class CreateApontamentosTable extends Migration
             $table->dateTime('hora_fim');
             $table->text('comentario');
             $table->integer('task_id')->unsigned();
-            $table->foreign('task_id')->references('id')->on('tasks');
+            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

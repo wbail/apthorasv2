@@ -56,13 +56,27 @@ $(document).ready(function() {
 // atalho teclado
 
 // Nova tarefa
-var ene = false;
+// var ene = false;
+// document.onkeyup = function(e) {
+//     if(e.which == 78) ene = false;
+// };
+// document.onkeydown = function(e){
+//     if(e.which == 78) ene = true;
+//     if(e.which == 84 && ene == true) {
+//          $('#myModalAddTask').modal("show", function() {
+//             $('#myModalAddTask').on('show.bs.modal', function() {
+//                 $('#projectid').focus();
+//             }); 
+//         });   
+//     }
+// }
+var alt = false;
 document.onkeyup = function(e) {
-    if(e.which == 78) ene = false;
+    if(e.which == 18) alt = false;
 };
 document.onkeydown = function(e){
-    if(e.which == 78) ene = true;
-    if(e.which == 84 && ene == true) {
+    if(e.which == 18) alt = true;
+    if(e.which == 84 && alt == true) {
          $('#myModalAddTask').modal("show", function() {
             $('#myModalAddTask').on('show.bs.modal', function() {
                 $('#projectid').focus();
