@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.0/css/bootstrap-slider.min.css" />
 
     
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}"> --}}
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('build/css/app.css') }}"> --}}
     
 
     <!-- Styles -->
@@ -125,7 +125,7 @@
     <script type="text/javascript" src="//cdn.datatables.net/plug-ins/1.10.13/api/sum().js"></script>
 
 
-    {{-- <script type="text/javascript" src="{{ asset('../resources/assets/js/main.js') }}"></script> --}}
+    {{-- <script type="text/javascript" src="{{ asset('build/js/app.js') }}"></script> --}}
     <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
 
 

@@ -12,7 +12,7 @@
     <title>AptHoras² - GB Engenharia</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="{{ asset('../resources/views/layouts/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor2/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -20,12 +20,12 @@
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
 
     <!-- Plugin CSS -->
-    <link rel="stylesheet" href="{{ asset('../resources/views/layouts/vendor/font-awesome/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('../resources/views/layouts/vendor/simple-line-icons/css/simple-line-icons.css') }}">
-    <link rel="stylesheet" href="{{ asset('../resources/views/layouts/vendor/device-mockups/device-mockups.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor2/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor2/simple-line-icons/css/simple-line-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor2/device-mockups/device-mockups.min.css') }}">
 
     <!-- Theme CSS -->
-    <link href="{{ asset('../resources/views/layouts/css/new-age.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css2/new-age.min.css') }}" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -59,6 +59,9 @@
                     </li>
                     <li>
                         <a class="page-scroll" href="#contact">Contato</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="{{ url('/login') }}">Login</a>
                     </li>
                 </ul>
             </div>
@@ -140,31 +143,31 @@
                                         <!-- Wrapper for slides -->
                                         <div class="carousel-inner" role="listbox">
                                             <div class="item active">
-                                                <img src="{{ asset('../resources/views/layouts/img/tarefas.png') }}" alt="...">
+                                                <img src="{{ asset('img/tarefas.png') }}" alt="...">
                                                 <div class="carousel-caption">
                                                     ...
                                                 </div>
                                             </div>
                                             <div class="item">
-                                                <img src="{{ asset('../resources/views/layouts/img/tarefas.png') }}" alt="...">
+                                                <img src="{{ asset('img/tarefas.png') }}" alt="...">
                                                 <div class="carousel-caption">
                                                     ...
                                                 </div>
                                             </div>
                                             <div class="item">
-                                                <img src="{{ asset('../resources/views/layouts/img/tarefas.png') }}" alt="...">
+                                                <img src="{{ asset('img/tarefas.png') }}" alt="...">
                                                 <div class="carousel-caption">
                                                     ...
                                                 </div>
                                             </div>
                                             <div class="item">
-                                                <img src="{{ asset('../resources/views/layouts/img/tarefas.png') }}" alt="...">
+                                                <img src="{{ asset('img/tarefas.png') }}" alt="...">
                                                 <div class="carousel-caption">
                                                     ...
                                                 </div>
                                             </div>
                                             <div class="item">
-                                                <img src="{{ asset('../resources/views/layouts/img/tarefas.png') }}" alt="...">
+                                                <img src="{{ asset('img/tarefas.png') }}" alt="...">
                                                 <div class="carousel-caption">
                                                     ...
                                                 </div>
@@ -271,16 +274,16 @@
     </footer>
 
     <!-- jQuery -->
-    <script src="{{ asset('../resources/views/layouts/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor2/jquery/jquery.min.js') }}"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="{{ asset('../resources/views/layouts/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('vendor2/bootstrap/js/bootstrap.min.js') }}"></script>
 
     <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 
     <!-- Theme JavaScript -->
-    <script src="{{ asset('../resources/views/layouts/js/new-age.min.js') }}"></script>
+    <script src="{{ asset('js2/new-age.min.js') }}"></script>
 
 </body>
 

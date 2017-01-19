@@ -2,11 +2,12 @@
 
 namespace App\Console;
 
+use App\Task;
+use DB;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use DB;
-use App\Task;
 use App\Http\Controllers\TaskController;
+use App\Jobs\SendTaskRememberEmail;
 
 class Kernel extends ConsoleKernel {
     /**
@@ -15,7 +16,7 @@ class Kernel extends ConsoleKernel {
      * @var array
      */
     protected $commands = [
-        //
+        Commands\VerifyTasksToEmail::class,
     ];
 
     /**
@@ -25,33 +26,12 @@ class Kernel extends ConsoleKernel {
      * @return void
      */
     protected function schedule(Schedule $schedule) {
+        
         // $schedule->command('inspire')
         //          ->hourly();
         
-        $schedule->call(function() {
-            $query = DB::select('select count(t.id)
-                                  from tasks as t
-                                 where t.status < 100
-                                   and date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 1 day), \'%d/%m/%Y\')
-                                    or date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 3 day), \'%d/%m/%Y\')
-                                    or date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 7 day), \'%d/%m/%Y\');');
-
-            if ($query > 0) {
-                $result = DB::select('select t.id
-                                          from tasks as t
-                                         where t.status < 100
-                                           and date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 1 day), \'%d/%m/%Y\')
-                                            or date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 3 day), \'%d/%m/%Y\')
-                                            or date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 7 day), \'%d/%m/%Y\');');   
-                
-                for ($i = 0; $i < count($result); $i++) { 
-                    TaskController::remember($result[$i]->id);
-                    sleep(10);
-                }
-            }
-
-        })->daily();
-
+        $schedule->command('verify:task')
+                ->daily();
     }
 
     /**
