@@ -36,9 +36,6 @@
 				{!! Form::label('Fase *') !!}
 				{!! Form::select('fase', $fase, null, ['class'=>'form-control', 'placeholder'=>'', 'title'=>'Fase do Projeto']) !!}
 				<br>
-				{!! Form::label('Status *') !!}
-				{!! Form::number('status', null, ['class'=>'form-control', 'min'=>'0', 'max'=>'100', 'title'=>'Status do Projeto']) !!}
-				<br>
 				{!! Form::submit('Salvar', ['class'=>'btn btn-primary pull-right']) !!}
 			{!! Form::close() !!}
 
