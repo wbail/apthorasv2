@@ -83,7 +83,7 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        //
+        return View::make('users.edit', ['user' => User::find($id)]);
     }
 
     /**
@@ -94,7 +94,7 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+        return $request->all();
     }
 
     /**
@@ -104,6 +104,40 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        //
+        return $id;
     }
+
+
+    public function admin() {
+
+        $query = DB::select('select u.name as name
+                                 , count(t.id) as tp
+                                 , (select count(t.id)
+                                      from tasks as t
+                                     where t.status = 100
+                                       and u.id = t.user_id) as tc
+                              from users as u
+                             inner join tasks as t
+                                on u.id = t.user_id
+                             where t.status < 100
+                             group by u.id, u.name');
+
+
+        $query = collect($query);
+
+
+        $users = DB::table('users as u')
+            ->orderBy('u.name')
+            ->get();
+
+
+        return View::make('users.admin', [
+            'users' => $users,
+            'user' => $users,
+            'query' => $query
+        ]);
+    }
+
+
+
 }

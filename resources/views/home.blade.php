@@ -57,7 +57,8 @@
                         <ul class="dropdown-menu">
                             <li><a href="#">Link</a></li>
                         </ul>
-                    </div>                    
+                    </div>
+                    <a href="{{ url('/admin') }}" class="btn btn-default"><i class="fa fa-lock"></i> Admin</a>
                 </div> {{-- ./panel-body --}}
             </div> {{-- ./panel --}}
         </div> {{-- ./col-md-8 --}}

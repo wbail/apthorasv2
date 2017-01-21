@@ -19,7 +19,10 @@ Route::get('/cep', function() {
     return view('cep');
 });
 
-Route::get('my-tasks', 'UserController@index');
+Route::get('my-tasks', 'UserController@index', ['middleware' => 'auth']);
+Route::get('/admin', 'UserController@admin', ['middleware' => 'auth']);
+Route::get('/user/edit/{id}', 'UserController@edit', ['middleware' => 'auth']);
+Route::put('/user/update/{id}', 'UserController@update', ['middleware' => 'auth']);
 
 Auth::routes();
 
@@ -36,7 +39,6 @@ Route::group(['prefix'=>'tasks','where'=>['id'=>'[0-9]+']], function() {
 	Route::get('destroy/{id}', ['as'=>'tasks.destroy', 'uses'=>'TaskController@destroy', 'middleware' => 'auth']);
 	Route::get('show/{id}', ['as'=>'tasks.show', 'uses'=>'TaskController@show', 'middleware' => 'auth']);
 	Route::get('remember/{id}', ['as'=>'tasks.remember', 'uses'=>'TaskController@remember', 'middleware' => 'auth']);
-	Route::get('chama', ['as'=>'tasks.chama', 'uses'=>'TaskController@chama', 'middleware' => 'auth']);
 
 });
 
