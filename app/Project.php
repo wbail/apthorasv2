@@ -11,6 +11,8 @@ class Project extends Model {
     
     public $fillable = [
 		'titulo',
+		'fase',
+		'status',
 		'data_entrega',
 		'user_id',
 		'client_id'

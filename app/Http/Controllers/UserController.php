@@ -94,7 +94,10 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        return $request->all();
+        
+        $user = User::find($id)->update($request->all());
+        return redirect('/admin');
+
     }
 
     /**
@@ -125,6 +128,30 @@ class UserController extends Controller {
 
         $query = collect($query);
 
+        $queryproject = DB::select('select (select c.nome_fantasia
+                                              from clients as c
+                                             where c.id = p.client_id) as cliente
+                                 , p.titulo
+                                 , case when p.fase = 0 then \'Iniciação\' 
+                                        when p.fase = 1 then \'Planejamento\'
+                                        when p.fase = 2 then \'Execução\'
+                                        when p.fase = 3 then \'Monitoramento e Controle\'
+                                        when p.fase = 4 then \'Finalização\'
+                                   end as fase
+                                 , p.status
+                                 , count(t.id) as tp
+                                 , (select count(t.id)
+                                      from tasks as t
+                                     where t.status = 100
+                                       and p.id = t.project_id) as tc
+                              from projects as p
+                             inner join tasks as t
+                                on p.id = t.project_id
+                             where t.status < 100
+                             group by p.id, p.titulo, fase, p.status, cliente');
+
+
+        $queryproject = collect($queryproject);
 
         $users = DB::table('users as u')
             ->orderBy('u.name')
@@ -134,7 +161,8 @@ class UserController extends Controller {
         return View::make('users.admin', [
             'users' => $users,
             'user' => $users,
-            'query' => $query
+            'query' => $query,
+            'queryproject' => $queryproject,
         ]);
     }
 
