@@ -58,7 +58,9 @@
                             <li><a href="#">Link</a></li>
                         </ul>
                     </div>
+                    @if(Auth::user()->admin === 1)
                     <a href="{{ url('/admin') }}" class="btn btn-default"><i class="fa fa-lock"></i> Admin</a>
+                    @endif
                 </div> {{-- ./panel-body --}}
             </div> {{-- ./panel --}}
         </div> {{-- ./col-md-8 --}}

@@ -118,7 +118,7 @@ class ProjectController extends Controller
         $project->titulo = $request->input('titulo');
         $project->fase = $request->input('fase');
         $project->status = $request->input('status');
-        $project->data_entrega = $request->input('data_entrega');
+        $project->data_entrega = date("Y-m-d H:m:s",strtotime(str_replace('/','-',$request->input('data_entrega'))));
         $project->client()->associate($request->input('client'));
 
         $project->save();

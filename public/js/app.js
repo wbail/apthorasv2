@@ -44172,7 +44172,7 @@ $('.btn-primary').click(function(){
 // DataTable
 $(document).ready(function() {
 
-    $('#defaulttable').DataTable({
+    $('table.display').DataTable({
         "language": {
             
             "decimal":        "",

@@ -22,7 +22,7 @@ $('.btn-primary').click(function(){
 // DataTable
 $(document).ready(function() {
 
-    $('#defaulttable').DataTable({
+    $('table.display').DataTable({
         "language": {
             
             "decimal":        "",
@@ -203,6 +203,14 @@ $('#myModalDelTask').on('show.bs.modal', function(e) {
     $modal.find('.del-task').html('<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button><a href="tasks/destroy/' + taskid + '" class="btn btn-danger"> Excluir </a>');           
 });
 
+//Deletar user admin page
+$('#myModalDelUser').on('show.bs.modal', function(e) {
+    
+    var $modal = $(this);
+    var userid = e.relatedTarget.id;
+    $modal.find('.modal-title').html('Deseja realmente excluir o usuário?');
+    $modal.find('.del-user').html('<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button><a href="user/destroy/' + userid + '" class="btn btn-danger"> Excluir </a>');           
+});
 
 // Dashboard task
 $('.btn-link').on('click', function(e) {    

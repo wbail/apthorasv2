@@ -11,7 +11,7 @@
     {{-- <title>{{ config('app.name', 'Laravel') }}</title> --}}
     <title>AptHoras²</title>
 
-    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon"> 
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -126,7 +126,8 @@
 
 
     {{-- <script type="text/javascript" src="{{ asset('build/js/app.js') }}"></script> --}}
-    <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+    {{-- <script type="text/javascript" src="{{ asset('js/main.js') }}"></script> --}}
+    {{ Html::script('js/main.js') }}
 
 
     <!-- Scripts -->

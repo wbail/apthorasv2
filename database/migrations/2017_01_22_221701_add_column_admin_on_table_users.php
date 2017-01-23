@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColunsFoneEmailTableClients extends Migration
+class AddColumnAdminOnTableUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddColunsFoneEmailTableClients extends Migration
      */
     public function up()
     {
-        Schema::table('clients', function (Blueprint $table) {
-            $table->string('telefone', 12)->after('documento');
-            $table->string('email', 60)->after('telefone');
+        Schema::table('users', function (Blueprint $table) {
+            $table->boolean('admin')->after('name')->default(0)->nullable();
         });
     }
 
@@ -26,7 +25,7 @@ class AddColunsFoneEmailTableClients extends Migration
      */
     public function down()
     {
-        Schema::table('clients', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

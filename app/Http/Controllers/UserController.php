@@ -95,7 +95,26 @@ class UserController extends Controller {
      */
     public function update(Request $request, $id) {
         
-        $user = User::find($id)->update($request->all());
+        if ($request->input('admin') != 'on') {
+
+            $user = User::find($id);
+            $user->name = $request->input('name');
+            $user->admin = 0;
+            $user->email = $request->input('email');
+            $user->password = bcrypt($request->input('password'));
+            $user->save();
+
+        } else {
+            
+            $user = User::find($id);
+            $user->name = $request->input('name');
+            $user->admin = 1;
+            $user->email = $request->input('email');
+            $user->password = bcrypt($request->input('password'));
+            $user->save();
+        }
+            
+        
         return redirect('/admin');
 
     }
@@ -139,6 +158,7 @@ class UserController extends Controller {
                                         when p.fase = 4 then \'Finalização\'
                                    end as fase
                                  , p.status
+                                 , p.data_entrega
                                  , count(t.id) as tp
                                  , (select count(t.id)
                                       from tasks as t
@@ -148,7 +168,7 @@ class UserController extends Controller {
                              inner join tasks as t
                                 on p.id = t.project_id
                              where t.status < 100
-                             group by p.id, p.titulo, fase, p.status, cliente');
+                             group by p.id, p.titulo, fase, p.status, cliente, p.data_entrega');
 
 
         $queryproject = collect($queryproject);

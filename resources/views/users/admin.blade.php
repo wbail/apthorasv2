@@ -16,11 +16,12 @@
 						<h3 class="panel-title">Usuários</h3>
 					</div>
 					<div class="panel-body">
-						<table class="table table-striped table-hover table-bordered">
+						<table class="table table-striped table-hover table-bordered display">
 							<thead>
 								<tr>
 									<th>Usuário</th>
 									<th>E-Mail</th>
+									<th>Perfil</th>
 									<th class="text-center">Ação</th>
 								</tr>
 							</thead>
@@ -29,6 +30,11 @@
 								<tr>
 									<td>{{ $user->name }}</td>
 									<td>{{ $user->email }}</td>
+									@if($user->admin === 1)
+									<td>Admin</td>
+									@else
+									<td>Comum</td>
+									@endif
 									<td class="text-center">
 										<a id="{{ $user->id }}" class="btn btn-link" href="{{ url('user/edit', ['id'=>$user->id]) }}" title="Editar"><i class="fa fa-pencil"></i></a>
                                 		<button id="{{ $user->id }}" value="{{ $user->id }}" class="btn btn-link" data-toggle="modal" data-target="#myModalDelUser" title="Excluir"><i class="fa fa-trash"></i> </button>
@@ -48,7 +54,7 @@
 						<h3 class="panel-title">Task x Usuário</h3>
 					</div>
 					<div class="panel-body">
-						<table id="defaulttable" class="table table-striped table-hover table-bordered">
+						<table class="table table-striped table-hover table-bordered display">
 							<thead>
 								<tr>
 									<th>Usuário</th>
@@ -79,12 +85,13 @@
 						<h3 class="panel-title">Projeto x Task</h3>
 					</div>
 					<div class="panel-body">
-						<table id="defaulttable" class="table table-striped table-hover table-bordered">
+						<table class="table table-striped table-hover table-bordered display">
 							<thead>
 								<tr>
 									<th>Cliente</th>
 									<th>Projeto</th>
 									<th>Fase</th>
+									<th>Entrega</th>
 									<th>Status</th>
 									<th title="Qnt Tasks Complete">TC</th>
 									<th title="Qnt Tasks Pending">TP</th>
@@ -96,6 +103,7 @@
 									<td>{{ $queryproject->cliente }}</td>
 									<td>{{ $queryproject->titulo }}</td>
 									<td>{{ $queryproject->fase }}</td>
+									<td>{{ \Carbon\Carbon::parse($queryproject->data_entrega)->format('d/m/Y') }}</td>
 									<td>
 		                                <div class="progress">
 		                                    @if($queryproject->status >= 0 && $queryproject->status <= 30)
@@ -158,19 +166,21 @@
 
 
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.js"></script>
+{{-- <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+ --}}
 
 <script type="text/javascript">
 
 //Deletar user
-$('#myModalDelUser').on('show.bs.modal', function(e) {
+// $('#myModalDelUser').on('show.bs.modal', function(e) {
     
-    var $modal = $(this);
-    var userid = e.relatedTarget.id;
-    $modal.find('.modal-title').html('Deseja realmente excluir o usuário?');
-    $modal.find('.del-user').html('<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button><a href="user/destroy/' + userid + '" class="btn btn-danger"> Excluir </a>');           
-});
+//     var $modal = $(this);
+//     var userid = e.relatedTarget.id;
+//     $modal.find('.modal-title').html('Deseja realmente excluir o usuário?');
+//     $modal.find('.del-user').html('<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button><a href="user/destroy/' + userid + '" class="btn btn-danger"> Excluir </a>');           
+// });
+
 
 </script>
 

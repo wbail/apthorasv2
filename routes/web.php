@@ -20,10 +20,10 @@ Route::get('/cep', function() {
 });
 
 Route::get('my-tasks', 'UserController@index', ['middleware' => 'auth']);
-Route::get('/admin', 'UserController@admin', ['middleware' => 'auth']);
-Route::get('/user/edit/{id}', 'UserController@edit', ['middleware' => 'auth']);
-Route::put('/user/update/{id}', 'UserController@update', ['middleware' => 'auth']);
-Route::get('/user/destroy/{id}', 'UserController@destroy', ['middleware' => 'auth']);
+Route::get('/admin', 'UserController@admin');
+Route::get('/user/edit/{id}', 'UserController@edit');
+Route::put('/user/update/{id}', 'UserController@update');
+Route::get('/user/destroy/{id}', 'UserController@destroy');
 
 Auth::routes();
 

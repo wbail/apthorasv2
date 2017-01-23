@@ -69,7 +69,7 @@
 
         <div class="row">
             <div class="col-md-12">        
-                <table data-order='[[0, "desc"]]' class="table table-striped table-hover table-bordered" id="defaulttable">
+                <table data-order='[[0, "desc"]]' class="table table-striped table-hover table-bordered display" id="defaulttable">
                     <thead>
                         <tr>
                             <th class="col-sm-1 text-left">Cód</th>

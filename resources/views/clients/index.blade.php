@@ -10,7 +10,7 @@
 			<h1>Clientes</h1>
 		</div>
 
-		<table class="table table-striped table-hover table-bordered" id="defaulttable">
+		<table class="table table-striped table-hover table-bordered display" id="defaulttable">
 			<thead>
 				<tr>
 					<th>#</th>

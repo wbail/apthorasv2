@@ -14,6 +14,9 @@
 
 				{!! Form::open(['url' => "/user/update/$user->id", 'method' => 'put']) !!}
 
+					{!! Form::label('admin', "Admin *") !!}
+					{!! Form::checkbox('admin', null, $user->admin, ['title'=>'Perfil de Usuário']) !!}
+					<br><br>
 					{!! Form::label('name', "Nome *") !!}
 					{!! Form::text('name', $user->name, ['class'=>'form-control', 'title'=>'Nome de Usuário']) !!}
 					<br>
