@@ -50,7 +50,8 @@ class VerifyTasksToEmail extends Command {
         $query = DB::select('select count(t.id)
                               from tasks as t
                              where t.status < 100
-                               and date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 1 day), \'%d/%m/%Y\')
+                               and date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format(now(), \'%d/%m/%Y\')
+                                or date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 1 day), \'%d/%m/%Y\')
                                 or date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 3 day), \'%d/%m/%Y\')
                                 or date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 7 day), \'%d/%m/%Y\');');
 
@@ -58,12 +59,12 @@ class VerifyTasksToEmail extends Command {
             $result = DB::select('select t.id
                                       from tasks as t
                                      where t.status < 100
-                                       and date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 1 day), \'%d/%m/%Y\')
+                                       and date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format(now(), \'%d/%m/%Y\')
+                                        or date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 1 day), \'%d/%m/%Y\')
                                         or date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 3 day), \'%d/%m/%Y\')
                                         or date_format(t.prazo_finalizacao, \'%d/%m/%Y\') = date_format((now() + interval 7 day), \'%d/%m/%Y\');');   
 
             for ($i = 0; $i < count($result); $i++) {
-                // TaskController::remember($result[$i]->id);
 
                 $this->task = Task::find($result[$i]->id);
 

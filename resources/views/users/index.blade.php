@@ -28,7 +28,7 @@
 			<h1>Minhas Tarefas</h1>
 		</div>
 
-		<table class="table table-striped table-bordered table-hover" id="defaulttable">
+		<table class="table table-striped table-bordered table-hover display" id="defaulttable">
 			<thead>
 				<tr>
 					<th>#</th>
